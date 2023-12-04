@@ -1,0 +1,25 @@
+.Loading{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .spinner{
+        animation: spinnerL 1s ease infinite;
+        border: 1px solid red;
+        width: 70px;
+        border-radius: 50%;
+        border-top: transparent;
+        border-bottom: transparent;
+        height: 70px;
+    }
+}
+@keyframes spinnerL{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(365deg);
+    }
+}

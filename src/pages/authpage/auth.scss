@@ -1,0 +1,184 @@
+@import "/src/media.scss";
+.Container-auth {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    .left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        position: relative;
+        height: 100%;
+        @include respond(lg){
+            display: none;
+        }
+        img {
+            width: 350px;
+            height: 400px;
+            border-radius: 4px;
+        }
+        .image_a {
+            position: absolute;
+            left: 10rem;
+            z-index: -1;
+            top: 2rem;
+            img {
+                transform: rotate(5deg);
+            }
+        }
+    }
+    .right {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+        padding: 15px;
+        @include respond(lg){
+            align-items: center;
+        }
+        h1 {
+            color: darkgray;
+            font-size: 45px;
+            letter-spacing: 1.2px;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid darkgray;
+            width: 350px;
+            height: 100%;
+            .form__a {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                padding: 15px;
+                input {
+                    border-radius: 4px;
+                    padding: 10px 15px;
+                    outline: none;
+                }
+            }
+            .button__a {
+                width: 100%;
+                padding: 15px;
+
+                button {
+                    width: 100%;
+                }
+            }
+            .linear {
+                position: relative;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                justify-content: center;
+
+                .linear-left {
+                    position: absolute;
+                    width: 150px;
+                    background: white;
+                    left: 0;
+                    height: 1px;
+                }
+                .linear-right {
+                    position: absolute;
+                    width: 150px;
+                    background: white;
+                    right: 0;
+                    height: 1px;
+                }
+            }
+            .google_a {
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .__a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    .icon {
+                        font-size: 35px;
+                    }
+                }
+                .__b {
+                    color: #3b71ca;
+                }
+            }
+        }
+        .__link {
+            border: 1px solid darkgray;
+            margin-top: 1rem;
+            padding: 10px 15px;
+            border-radius: 4px;
+            width: 350px;
+            span {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                a {
+                    color: #3b71ca;
+                }
+            }
+        }
+        .bottom{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            width: 350px;
+            .getapp{
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-size: 25px;
+            }
+            .left{
+                flex: 1;
+                border: 1px solid darkgray;
+                padding: 5px 5px;
+                justify-content: center;
+            }
+            .__a{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .faplay{
+                    display: flex;
+                    align-items: center;
+
+                    .__a{
+                        display: flex;
+                        color: darkgray;
+                        font-size: 12px;
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
+                }
+                .right{
+                    display: flex;
+                    flex: 1;
+                    border: 1px solid darkgray;
+                    padding: 10px 15px;
+                    justify-content: center;
+                    align-items: center;
+
+                    .__b{
+                        color: darkgray;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

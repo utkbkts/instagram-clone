@@ -1,0 +1,44 @@
+.Container-navbar {
+    position: absolute;
+    .wrapper {
+        padding: 10px;
+        position: relative;
+        button {
+            border: 1px solid darkgray;
+            width: 70px;
+            height: 20px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 25px;
+            position: absolute;
+            z-index: 1;
+            .sun{
+                position: absolute;
+                left: 0;
+                font-size: 25px;
+                height: 100%;
+                top: 0;
+            }
+        }
+        .__a {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: white;
+            left: 1rem;
+            top: 13px;
+            transition: all 1s ease-in-out;
+            &.active {
+                left: 3.5rem !important;
+            }
+        }
+        .moon{
+            position: absolute;
+            right: 0;
+            font-size: 25px;
+            height: 100%;
+            top: 0;
+        }
+    }
+}
