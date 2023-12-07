@@ -153,8 +153,8 @@ const ProfilePost = ({ post }) => {
                   maxH={"350px"}
                   overflowY={"auto"}
                 >
-                  {post.comments.map((post) => (
-                    <Comment post={post} key={post.id} />
+                  {post.comments.map((comment) => (
+                    <Comment comment={comment} key={post.id} />
                   ))}
                 </VStack>
                 <Divider my={4} bg={"gray.500"} />

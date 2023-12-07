@@ -1,29 +1,25 @@
-import React, { useState } from "react";
 import { Flex, Avatar, Text, SkeletonCircle } from "@chakra-ui/react";
 import useGetUserProfileID from "../../hooks/useGetUserProfileID";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 import { timeAgo } from "../../utils/timeAgo";
 import { MdDelete } from "react-icons/md";
-import userProfileStore from "../../store/useProfleStore";
 import useAuthStore from "../../store/store";
-import useShowToast from "../../hooks/useToast";
-const Comment = ({ post }) => {
-  const { userProfile, isLoading } = useGetUserProfileID(post.createdBy);
-  const authUser = userProfileStore((state) => state.userProfile);
+import usePostComment from "../../hooks/usePostComment";
+const Comment = ({ comment }) => {
+  const { userProfile } = useGetUserProfileID(comment?.createdBy);
   const User = useAuthStore((state) => state.user);
-  const showToast = useShowToast()
   return (
     <Flex gap={4} alignItems={"center"}>
      <Link to={`/${userProfile?.username}`}> <Avatar src={userProfile?.profilePicURL} alt="profile" size={"sm"} /></Link>
       <Flex direction={"column"}>
         <Flex gap={2} alignItems={"center"}>
           <Text fontWeight={"bold"}>{userProfile?.username}</Text>
-          <Text>{post?.comment}</Text>
-          {User.uid === authUser.uid && (<MdDelete/>)}
+          <Text>{comment?.comment}</Text>
+          {User.uid === userProfile?.uid && (<MdDelete  />)}
         </Flex>
         <Text fontSize={12} color={"gray"}>
-          {timeAgo(post.createdAt)}
+          {timeAgo(comment?.createdAt)}
         </Text>
       </Flex>
     </Flex>

@@ -15,7 +15,7 @@ import { db } from "../firebase/config";
 const useSuggestedUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [suggedtedUser, setSuggestedUser] = useState([]);
-  const authuser = useAuthStore((state) => state.user);
+  const authUser = useAuthStore((state) => state.user);
   const showToast = useShowToast();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const useSuggestedUsers = () => {
         const userRef = collection(db, "users");
         const q = query(
           userRef,
-          where("uid", "not-in", [authuser.uid, ...authuser.following]),
+          where("uid", "not-in", [authUser.uid, ...authUser.following]),
           orderBy("uid"),
           limit(3)
         );
@@ -40,10 +40,10 @@ const useSuggestedUsers = () => {
         setIsLoading(false);
       }
     };
-    if (authuser) {
+    if (authUser) {
       getSuggestedUsers();
     }
-  }, [authuser, showToast]);
+  }, [authUser, showToast]);
 
   return { suggedtedUser, isLoading };
 };

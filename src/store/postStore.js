@@ -18,6 +18,18 @@ const usePostStore = create((set) => ({
         return post;
       }),
     })),
+    deleteComment: (postId, commentId) =>
+    set((state) => ({
+      posts: state.posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            comments: post.comments.filter((comment) => comment.id !== commentId),
+          };
+        }
+        return post;
+      }),
+    })),
 }));
 
 export default usePostStore;

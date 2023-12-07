@@ -6,30 +6,36 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { FaRegCommentAlt } from "react-icons/fa";
-import useGetUserPosts from "../../hooks/useGetUserPosts";
-import userProfileStore from "../../store/useProfleStore";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/store";
 import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from "../../utils/timeAgo";
+import CommentsModal from "../../components/modals/CommentModal";
 
-const PostFooter = ({ post }) => {
+const PostFooter = ({ post, userProfile }) => {
   if (!post) {
     console.error("Invalid post object:", post);
     return null;
   }
-
   const { isCommenting, handlePostComment } = usePostComment();
   const authuser = useAuthStore((state) => state.user);
   const [comment, setComment] = useState("");
   const commentref = useRef(null);
   const { isLiked, likes, handleLikePost, isUpdating } = useLikePost(post);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const handleSubmitComment = async () => {
-    await handlePostComment(post.id, comment);
-    setComment("");
+    if(comment === ""){
+      return;
+    }else{
+      await handlePostComment(post.id, comment);
+      setComment("");
+    }
+    
   };
 
   return (
@@ -45,14 +51,20 @@ const PostFooter = ({ post }) => {
       </Flex>
       <Text>{likes} Likes</Text>
       <Text fontWeight={600} fontSize={"sm"}>
-        utku
+        {timeAgo(post.createdAt)}
+      </Text>
+      <Text fontWeight={600} fontSize={"sm"}>
+        {userProfile?.username}
         <Text as={"span"} fontWeight={400} ml={2}>
-          feeling
+          {userProfile?.caption}
         </Text>
-        <Text fontSize={"sm"} color={"gray"}>
-          View all 1,000 comments
+        <Text onClick={onOpen} fontSize={"sm"} color={"gray"}>
+          View all {post.comments.length} comments
         </Text>
       </Text>
+      {isOpen ? (
+        <CommentsModal isOpen={isOpen} onClose={onClose} post={post} />
+      ) : null}
       {authuser && (
         <Flex
           alignItems={"center"}
