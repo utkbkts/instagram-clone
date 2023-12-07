@@ -5,12 +5,12 @@ import useSuggestedUsers from "../../hooks/useSuggestedUsers";
 import SuggestedUser from "./SuggestedUser";
 
 const SuggestedUsers = () => {
-  const {isLoading, suggedtedUser} = useSuggestedUsers();
+  const {isLoading, suggestedUsers} = useSuggestedUsers();
   if (isLoading) return null;
   return (
     <VStack py={8} px={6} gap={4}>
       <SuggestedHeader />
-      {suggedtedUser.length !== 0 && (
+      {suggestedUsers.length !== 0 && (
 				<Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
 					<Text fontSize={12} fontWeight={"bold"} color={"gray.500"}>
 						Suggested for you
@@ -20,7 +20,7 @@ const SuggestedUsers = () => {
 					</Text>
 				</Flex>
 			)}
-      {suggedtedUser.map((user)=>(
+      {suggestedUsers?.map((user)=>(
         <SuggestedUser  user={user} key={user.id}/>
       ))}
       <Box fontSize={12} color={"gray.500"} mt={5}>

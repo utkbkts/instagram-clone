@@ -9,9 +9,8 @@ import { auth, db } from "../firebase/config";
 const useGetFeedPosts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { posts, setPosts } = usePostStore();
-  const showToast = useShowToast();
   const authUser = useAuthStore((state) => state.user);
-
+  const showToast = useShowToast();
   const { setUserProfile } = userProfileStore();
   useEffect(() => {
     const getFeedPosts = async () => {
@@ -21,6 +20,7 @@ const useGetFeedPosts = () => {
         setPosts([]);
         return;
       }
+
       const q = query(
         collection(db, "posts"),
         where("createdBy", "in", authUser.following)
@@ -35,7 +35,6 @@ const useGetFeedPosts = () => {
 
         feedPosts.sort((a, b) => b.createdAt - a.createdAt);
         setPosts(feedPosts);
-      setIsLoading(false);
       } catch (error) {
         showToast("Error", error.message, "error");
       } finally {

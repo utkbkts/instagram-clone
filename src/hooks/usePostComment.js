@@ -11,7 +11,8 @@ const usePostComment = () => {
   const showToast = useShowToast();
   const authUser = useAuthStore((state) => state.user);
   const addComment = usePostStore((state) => state.addComment);
-  const deleteComment = usePostStore((state) => state.deleteComment);
+  const deleteComments = usePostStore((state) => state.deleteComment);
+
 
   const handlePostComment = async (postId, comment) => {
     if (isCommenting) return;
@@ -39,8 +40,19 @@ const usePostComment = () => {
       setIsCommenting(false);
     }
   };
- 
-  return { isCommenting, handlePostComment };
+  const deleteComment = async (postId, commentToDelete) => {
+    try {
+      await updateDoc(doc(db, "posts", postId), {
+        comments: arrayRemove(commentToDelete),
+      });
+      deleteComments(postId, commentToDelete);
+      showToast("Success","Deleted is Successfully","success")
+    } catch (error) {
+      console.log(error);
+      showToast("Error", error.message, "error");
+    }
+  };
+  return { isCommenting, handlePostComment,deleteComment };
 };
 
 export default usePostComment;

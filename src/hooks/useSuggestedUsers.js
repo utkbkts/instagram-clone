@@ -14,38 +14,46 @@ import { db } from "../firebase/config";
 
 const useSuggestedUsers = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [suggedtedUser, setSuggestedUser] = useState([]);
-  const authUser = useAuthStore((state) => state.user);
-  const showToast = useShowToast();
+	const [suggestedUsers, setSuggestedUsers] = useState([]);
+	const authUser = useAuthStore((state) => state.user);
+	const showToast = useShowToast();
 
-  useEffect(() => {
-    const getSuggestedUsers = async () => {
-      try {
-        const userRef = collection(db, "users");
-        const q = query(
-          userRef,
-          where("uid", "not-in", [authUser.uid, ...authUser.following]),
-          orderBy("uid"),
-          limit(3)
-        );
-        const querySnapshot = await getDocs(q);
-        const users = [];
-        querySnapshot.forEach((doc) => {
-          users.push({ ...doc.data(), id: doc.id });
-        });
-        setSuggestedUser(users);
-      } catch (error) {
-        showToast("Error", error.message, "error");
-      } finally {
+	useEffect(() => {
+		const getSuggestedUsers = async () => {
+			setIsLoading(true);
+      if (!authUser || !authUser.following) {
         setIsLoading(false);
+        setSuggestedUsers([]);
+        return;
       }
-    };
-    if (authUser) {
-      getSuggestedUsers();
-    }
-  }, [authUser, showToast]);
+			try {
+				const usersRef = collection(db, "users");
+				const q = query(
+					usersRef,
+					where("uid", "not-in", [authUser.uid, ...authUser.following]),
+					orderBy("uid"),
+					limit(3)
+				);
 
-  return { suggedtedUser, isLoading };
+				const querySnapshot = await getDocs(q);
+				const users = [];
+
+				querySnapshot.forEach((doc) => {
+					users.push({ ...doc.data(), id: doc.id });
+				});
+
+				setSuggestedUsers(users);
+			} catch (error) {
+				showToast("Error", error.message, "error");
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		if (authUser) getSuggestedUsers();
+	}, [authUser, showToast]);
+
+	return { isLoading, suggestedUsers };
 };
 
 export default useSuggestedUsers;

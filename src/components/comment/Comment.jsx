@@ -9,6 +9,15 @@ import usePostComment from "../../hooks/usePostComment";
 const Comment = ({ comment }) => {
   const { userProfile } = useGetUserProfileID(comment?.createdBy);
   const User = useAuthStore((state) => state.user);
+  const { deleteComment } = usePostComment();
+
+  const handleDeleteComment = async () => {
+    try {
+      await deleteComment(comment.postId, comment);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Flex gap={4} alignItems={"center"}>
      <Link to={`/${userProfile?.username}`}> <Avatar src={userProfile?.profilePicURL} alt="profile" size={"sm"} /></Link>
@@ -16,7 +25,7 @@ const Comment = ({ comment }) => {
         <Flex gap={2} alignItems={"center"}>
           <Text fontWeight={"bold"}>{userProfile?.username}</Text>
           <Text>{comment?.comment}</Text>
-          {User.uid === userProfile?.uid && (<MdDelete  />)}
+          {User.uid === userProfile?.uid && (<MdDelete  onClick={handleDeleteComment}/>)}
         </Flex>
         <Text fontSize={12} color={"gray"}>
           {timeAgo(comment?.createdAt)}
